@@ -26,9 +26,16 @@ cpi_data = pd.read_csv('STATIC_INFLATIONCALC.csv', skiprows=8)
 # rename columns for clarity
 cpi_data = cpi_data.rename(columns={'date': 'Date', 'STATIC_INFLATIONCALC': 'CPI'})
 
-print(cpi_data.head(1))
-print(100 * '-')
-print(cpi_data.tail(1))
-print(100 * '-')
-cpi_data.info()
-print(100 * '-')
+# convert the 'Date' column to datetime format
+cpi_data['Date'] = pd.to_datetime(cpi_data['Date'])
+
+# filter the data to only include the first day of each month
+cpi_data = cpi_data[cpi_data['Date'].dt.day == 1]
+
+# renumber the index of the DataFrame after filtering
+cpi_data = cpi_data.reset_index(drop=True)
+
+# calculates percentage change in CPI over a 12-month period and adds it as a new column to the DataFrame
+cpi_data['Annual Percentage (%)'] = cpi_data['CPI'].pct_change(periods=12) * 100
+
+print(cpi_data.tail())
