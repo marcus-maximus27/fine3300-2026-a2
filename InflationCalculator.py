@@ -119,9 +119,28 @@ def get_cpi(date):
     row = data[(data['Date'].dt.year == date.year) & (data['Date'].dt.month == date.month)]
     return row['CPI'].values[0]
 
-# price = get_price()
+# Main program: get user inputs
+price = get_price()
 first_date = get_date("Enter the first date (YYYY-MM): ")
 second_date = get_date("Enter the second date (YYYY-MM): ")
-print(first_date.year, first_date.month, get_cpi(first_date))
-print(second_date.year, second_date.month, get_cpi(second_date))
+
+cpi_1 = get_cpi(first_date)
+cpi_2 = get_cpi(second_date)
+
+# Calculations
+new_price = price * (cpi_2 / cpi_1)
+percent_change = (new_price - price) / price * 100
+no_months = (second_date.year - first_date.year) * 12 + (second_date.month - first_date.month)
+no_years = no_months / 12
+
+if no_months == 0:
+    avg_annual_rate = 0
+else:
+    avg_annual_rate = (np.power((cpi_2 / cpi_1), (1 / no_years)) - 1) * 100
+
+# Return values
+# print(first_date.year, first_date.month, get_cpi(first_date))
+# print(second_date.year, second_date.month, get_cpi(second_date))
+
+print(new_price, percent_change, no_months, no_years, avg_annual_rate)
 
