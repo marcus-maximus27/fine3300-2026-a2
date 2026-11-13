@@ -107,12 +107,21 @@ def get_date(prompt):
             continue
 
         if date not in data['Date'].values:
-            print("Please enter a date between 1914-01 and 2026-06.")
+            earliest = data['Date'].min().strftime('%Y-%m')
+            latest = data['Date'].max().strftime('%Y-%m')
+            print("Please enter a date between {} and {}.".format(earliest, latest))
             continue
 
         return date
-    
+
+# Function to get the CPI for a given date
+def get_cpi(date):
+    row = data[(data['Date'].dt.year == date.year) & (data['Date'].dt.month == date.month)]
+    return row['CPI'].values[0]
+
 # price = get_price()
 first_date = get_date("Enter the first date (YYYY-MM): ")
 second_date = get_date("Enter the second date (YYYY-MM): ")
-print(first_date, second_date)
+print(first_date.year, first_date.month, get_cpi(first_date))
+print(second_date.year, second_date.month, get_cpi(second_date))
+
