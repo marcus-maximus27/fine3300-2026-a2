@@ -138,9 +138,18 @@ if no_months == 0:
 else:
     avg_annual_rate = (np.power((cpi_2 / cpi_1), (1 / no_years)) - 1) * 100
 
-# Return values
-# print(first_date.year, first_date.month, get_cpi(first_date))
-# print(second_date.year, second_date.month, get_cpi(second_date))
+# Display the results, formatted like the Bank of Canada calculator
 
-print(new_price, percent_change, no_months, no_years, avg_annual_rate)
+print(100 * '-')
+print("Inflation Calculation Results")
+print(100 * '-')
+print("${:,.2f} CAD in {} would cost ${:,.2f} CAD in {}".format(price, first_date.strftime('%B %Y'), new_price, second_date.strftime('%B %Y')))
+
+print("Percent change: {:.2f}%".format(percent_change))
+print("Number of years: {:.2f} ({} months)".format(abs(no_years), abs(no_months)))
+print("Average annual rate of inflation: {:.2f}%".format(avg_annual_rate))
+print("CPI for {}: {:.1f}".format(first_date.strftime('%B %Y'), cpi_1))
+print("CPI for {}: {:.1f}".format(second_date.strftime('%B %Y'), cpi_2))
+
+print("2002 CPI = 100.0")
 
