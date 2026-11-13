@@ -20,6 +20,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Part 1: Clean the data
+
 # skip the first 8 rows of the CSV file and read the data into a pandas DataFrame
 data = pd.read_csv('STATIC_INFLATIONCALC.csv', skiprows=8)
 
@@ -38,9 +40,9 @@ data = data.reset_index(drop=True)
 # calculates percentage change in CPI over a 12-month period and adds it as a new column to the DataFrame
 data['Annual Percentage Change (%)'] = data['CPI'].pct_change(periods=12) * 100
 
-print(data.tail())
+# print(data.tail())
 
-# part 1: Graph the CPI over time
+# Part 2: Graph the CPI over time
 fig, ax = plt.subplots(figsize=(10, 5), layout='constrained')
 
 ax.plot(data['Date'], data['CPI'], color='blue', label='CPI')
@@ -63,7 +65,54 @@ ax.legend(lines1 + lines2, labels1 + labels2, loc='lower right')
 
 ax2.legend(lines1 + lines2, labels1 + labels2, loc='lower right')
 
-plt.show()
+# plt.show()
 
+# Part 3: Inflation Calculator
 
+'''
+Enter the price          →  validate (a positive number?)
+Enter the first date     →  validate format, extract year and month, check it's in the data
+Enter the second date    →  same checks
+Look up both CPIs        →  filter cpi_data by year and month
+Calculate                →  new price, % change, years, annual rate
+Print results            →  $, 2 decimals, CAD, like the BoC page
 
+'''
+
+# Function to get a valid price input from the user
+def get_price():
+
+    while True:
+        entry = input("Enter the price: ")
+        entry = entry.replace('$', '').replace(',', '')  # Remove commas and dollar signs from the input
+        try:
+            price = float(entry)
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+            continue
+        if price <= 0:
+            print("Invalid input. Please enter a positive number.")
+            continue
+
+        return price
+
+# Function to get a valid date input from the user
+def get_date(prompt):
+    while True:
+        entry = input(prompt).strip() # Remove leading and trailing whitespace
+        try:
+            date = pd.to_datetime(entry, format='%Y-%m')
+        except ValueError:
+            print("Invalid input. Please enter a date in the format YYYY-MM.")
+            continue
+
+        if date not in data['Date'].values:
+            print("Please enter a date between 1914-01 and 2026-06.")
+            continue
+
+        return date
+    
+# price = get_price()
+first_date = get_date("Enter the first date (YYYY-MM): ")
+second_date = get_date("Enter the second date (YYYY-MM): ")
+print(first_date, second_date)
