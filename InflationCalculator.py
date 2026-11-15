@@ -139,15 +139,16 @@ else:
     avg_annual_rate = (np.power((cpi_2 / cpi_1), (1 / no_years)) - 1) * 100
 
 # Display the results, formatted like the Bank of Canada calculator
-
-print(100 * '-')
+print(55 * '-')
 print("Inflation Calculation Results")
-print(100 * '-')
+print(55 * '-')
 print("${:,.2f} CAD in {} would cost ${:,.2f} CAD in {}".format(price, first_date.strftime('%B %Y'), new_price, second_date.strftime('%B %Y')))
 
-print("Percent change: {:.2f}%".format(percent_change))
-print("Number of years: {:.2f} ({} months)".format(abs(no_years), abs(no_months)))
-print("Average annual rate of inflation: {:.2f}%".format(avg_annual_rate))
+print("{:<35} {:>20}%".format("Percent change: ", '{:+.2f}'.format(percent_change)))
+print("{:<35} {:>20} ({} months)".format("Number of years:", '{:.2f}'.format(abs(no_years)), abs(no_months)))
+print("{:<35} {:>20}%".format("Average annual rate of inflation: ", '{:+.2f}'.format(avg_annual_rate)))
+print("{:<35}".format("CPI for '{}'.format(first_date.strftime('%B %Y'), cpi_1): "))
+
 print("CPI for {}: {:.1f}".format(first_date.strftime('%B %Y'), cpi_1))
 print("CPI for {}: {:.1f}".format(second_date.strftime('%B %Y'), cpi_2))
 
