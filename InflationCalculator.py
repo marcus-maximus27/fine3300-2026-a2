@@ -63,7 +63,6 @@ ax.legend(lines1 + lines2, labels1 + labels2, loc='lower right')
 
 ax2.legend(lines1 + lines2, labels1 + labels2, loc='lower right')
 
-plt.show()
 
 # Part 3: Inflation Calculator
 
@@ -93,13 +92,11 @@ def get_date(prompt):
         except ValueError:
             print("Invalid input. Please enter a date in the format YYYY-MM.")
             continue
-
         if date not in data['Date'].values:
             earliest = data['Date'].min().strftime('%Y-%m')
             latest = data['Date'].max().strftime('%Y-%m')
             print("Please enter a date between {} and {}.".format(earliest, latest))
             continue
-
         return date
 
 # Function to get the CPI for a given date
@@ -107,8 +104,25 @@ def get_cpi(date):
     row = data[(data['Date'].dt.year == date.year) & (data['Date'].dt.month == date.month)]
     return row['CPI'].values[0]
 
+# Function to show CPI graph
+def get_graph():
+    while True:
+        entry = input("Show CPI data? (Y/N): ").strip().lower()
+
+        if entry == 'y':
+            plt.show()
+            print('This is the end of the program')
+            break
+        elif entry == 'n':
+            print('This is the end of the program')
+            break
+        else:
+            print('Please input Y/N')
+            continue
+
 # Main program: get user inputs
 price = get_price()
+
 first_date = get_date("Enter the first date (YYYY-MM): ")
 second_date = get_date("Enter the second date (YYYY-MM): ")
 
@@ -121,6 +135,12 @@ percent_change = (new_price - price) / price * 100
 no_months = (second_date.year - first_date.year) * 12 + (second_date.month - first_date.month)
 no_years = no_months / 12
 
+# Assign variables to datetime
+fd = first_date.strftime('%B %Y')
+sd = second_date.strftime('%B %Y')
+label_1 = 'CPi for {}: '.format(fd)
+label_2 = 'CPi for {}: '.format(sd)
+
 if no_months == 0:
     avg_annual_rate = 0
 else:
@@ -130,11 +150,9 @@ else:
 print(65 * '-')
 print("Inflation Calculation Results")
 print(65 * '-')
-print("${:,.2f} CAD in {} would cost ${:,.2f} CAD in {}".format(price, first_date.strftime('%B %Y'), new_price, second_date.strftime('%B %Y')))
-print()
+print("${:,.2f} CAD in {} would cost ${:,.2f} CAD in {}".format(price, fd, new_price, sd))
 
-label_1 = 'CPi for {}: '.format(first_date.strftime('%B %Y'))
-label_2 = 'CPi for {}: '.format(second_date.strftime('%B %Y'))
+print()
 
 print("{:<35} {:>20}".format("Percent change: ", '{:+.2f}%'.format(percent_change)))
 print("{:<35} {:>20} ({} months)".format("Number of years:", '{:.2f}'.format(abs(no_years)), abs(no_months)))
@@ -145,4 +163,7 @@ print("{:<35} {:>20}".format(label_2, '{:.1f}'.format(cpi_2)))
 print()
 
 print("2002 CPI = 100.0")
+
+show_graph = get_graph()
+
 
