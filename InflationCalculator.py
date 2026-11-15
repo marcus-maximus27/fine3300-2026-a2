@@ -15,32 +15,30 @@ Sources:
     - pandas read_csv documentation (skiprows): https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
 '''
 
-# import necessary libraries
+# Import necessary libraries
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Part 1: Clean the data
 
-# skip the first 8 rows of the CSV file and read the data into a pandas DataFrame
+# Skip the first 8 rows of the CSV file and read the data into a pandas DataFrame
 data = pd.read_csv('STATIC_INFLATIONCALC.csv', skiprows=8)
 
-# rename columns for clarity
+# Rename columns for clarity
 data = data.rename(columns={'date': 'Date', 'STATIC_INFLATIONCALC': 'CPI'})
 
-# convert the 'Date' column to datetime format
+# Convert the 'Date' column to datetime format
 data['Date'] = pd.to_datetime(data['Date'])
 
-# filter the data to only include the first day of each month
+# Filter the data to only include the first day of each month
 data = data[data['Date'].dt.day == 1]
 
-# renumber the index of the DataFrame after filtering
+# Renumber the index of the DataFrame after filtering
 data = data.reset_index(drop=True)
 
-# calculates percentage change in CPI over a 12-month period and adds it as a new column to the DataFrame
+# Calculates percentage change in CPI over a 12-month period and adds it as a new column to the DataFrame
 data['Annual Percentage Change (%)'] = data['CPI'].pct_change(periods=12) * 100
-
-# print(data.tail())
 
 # Part 2: Graph the CPI over time
 fig, ax = plt.subplots(figsize=(10, 5), layout='constrained')
@@ -65,19 +63,9 @@ ax.legend(lines1 + lines2, labels1 + labels2, loc='lower right')
 
 ax2.legend(lines1 + lines2, labels1 + labels2, loc='lower right')
 
-# plt.show()
+plt.show()
 
 # Part 3: Inflation Calculator
-
-'''
-Enter the price          →  validate (a positive number?)
-Enter the first date     →  validate format, extract year and month, check it's in the data
-Enter the second date    →  same checks
-Look up both CPIs        →  filter cpi_data by year and month
-Calculate                →  new price, % change, years, annual rate
-Print results            →  $, 2 decimals, CAD, like the BoC page
-
-'''
 
 # Function to get a valid price input from the user
 def get_price():
@@ -139,18 +127,22 @@ else:
     avg_annual_rate = (np.power((cpi_2 / cpi_1), (1 / no_years)) - 1) * 100
 
 # Display the results, formatted like the Bank of Canada calculator
-print(55 * '-')
+print(65 * '-')
 print("Inflation Calculation Results")
-print(55 * '-')
+print(65 * '-')
 print("${:,.2f} CAD in {} would cost ${:,.2f} CAD in {}".format(price, first_date.strftime('%B %Y'), new_price, second_date.strftime('%B %Y')))
+print()
 
-print("{:<35} {:>20}%".format("Percent change: ", '{:+.2f}'.format(percent_change)))
+label_1 = 'CPi for {}: '.format(first_date.strftime('%B %Y'))
+label_2 = 'CPi for {}: '.format(second_date.strftime('%B %Y'))
+
+print("{:<35} {:>20}".format("Percent change: ", '{:+.2f}%'.format(percent_change)))
 print("{:<35} {:>20} ({} months)".format("Number of years:", '{:.2f}'.format(abs(no_years)), abs(no_months)))
-print("{:<35} {:>20}%".format("Average annual rate of inflation: ", '{:+.2f}'.format(avg_annual_rate)))
-print("{:<35}".format("CPI for '{}'.format(first_date.strftime('%B %Y'), cpi_1): "))
+print("{:<35} {:>20}".format("Average annual rate of inflation: ", '{:+.2f}%'.format(avg_annual_rate)))
+print("{:<35} {:>20}".format(label_1, '{:.1f}'.format(cpi_1)))
+print("{:<35} {:>20}".format(label_2, '{:.1f}'.format(cpi_2)))
 
-print("CPI for {}: {:.1f}".format(first_date.strftime('%B %Y'), cpi_1))
-print("CPI for {}: {:.1f}".format(second_date.strftime('%B %Y'), cpi_2))
+print()
 
 print("2002 CPI = 100.0")
 
