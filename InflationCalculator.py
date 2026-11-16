@@ -134,17 +134,16 @@ new_price = price * (cpi_2 / cpi_1)
 percent_change = (new_price - price) / price * 100
 no_months = (second_date.year - first_date.year) * 12 + (second_date.month - first_date.month)
 no_years = no_months / 12
+if no_months == 0:
+    avg_annual_rate = 0
+else:
+    avg_annual_rate = (np.power((cpi_2 / cpi_1), (1 / no_years)) - 1) * 100
 
 # Assign variables to datetime
 fd = first_date.strftime('%B %Y')
 sd = second_date.strftime('%B %Y')
 label_1 = 'CPi for {}: '.format(fd)
 label_2 = 'CPi for {}: '.format(sd)
-
-if no_months == 0:
-    avg_annual_rate = 0
-else:
-    avg_annual_rate = (np.power((cpi_2 / cpi_1), (1 / no_years)) - 1) * 100
 
 # Display the results, formatted like the Bank of Canada calculator
 print(65 * '-')
@@ -164,6 +163,7 @@ print()
 
 print("2002 CPI = 100.0")
 
+# Prompt the user to show the CPI graph
 show_graph = get_graph()
 
 
