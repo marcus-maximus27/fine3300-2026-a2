@@ -102,7 +102,24 @@ The year and month are extracted from each date and used to look up that month's
 
 ### Commentary
 
-[Your commentary: 4 to 6 sentences on what the graph shows and the most interesting periods.]
+The CPI rose from 6.0 in January 1914 to 170.0 in September 2026, meaning prices are
+about 28 times higher, an average increase of roughly 3.0% per year. The CPI line rises
+slowly until about 1970, then steepens sharply through the 1970s and 1980s and again
+after 2021.
+
+The annual percentage change shows that inflation was most volatile before 1950. It
+reached its highest reading of +21.6% in June 1920 and its lowest of -17.8% a year later,
+fell into deflation during the Great Depression (a low of -12.0% in July 1931), and
+spiked to +17.5% in February 1948 after the Second World War.
+
+Inflation remained high from 1970 to 1985, averaging 7.6% and peaking at +12.9% in
+July 1981. After the Bank of Canada adopted inflation-control targets in 1991, inflation
+stabilized, averaging 1.8% from 1992 to 2020. A post-pandemic surge then peaked at
++8.1% in June 2022 before easing to 3.1% by September 2026.
+
+The CPI crosses the dotted base line in mid-2002, as expected: the index is set so that
+the 2002 annual average equals 100, so monthly values range from 97.6 (January) to
+101.1 (December) that year.
 
 ## Sample Output
 
