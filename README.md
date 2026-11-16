@@ -106,10 +106,24 @@ The year and month are extracted from each date and used to look up that month's
 
 ## Sample Output
 
-Inputs: price `[...]`, first date `[...]`, second date `[...]`
+Inputs: price `100`, first date `2005-10`, second date `2026-09`
 
 ```
-[Paste the full terminal output from one run here, from the first prompt to the closing line.]
+Enter the price: 100
+Enter the first date (YYYY-MM): 2005-10
+Enter the second date (YYYY-MM): 2026-09
+-----------------------------------------------------------------
+Inflation Calculation Results
+-----------------------------------------------------------------
+$100.00 CAD in October 2005 would cost $157.55 CAD in September 2026
+
+Percent change:                                  +57.55%
+Number of years:                                   20.92 (251 months)
+Average annual rate of inflation:                 +2.20%
+CPi for October 2005:                              107.9
+CPi for September 2026:                            170.0
+
+2002 CPI = 100.0
 ```
 
 ## Sources
@@ -125,4 +139,4 @@ Inputs: price `[...]`, first date `[...]`, second date `[...]`
 
 ## AI Use Disclosure
 
-[State how AI was used in this assignment, per the course AI policy.]
+Claude Opus 5.5 was used for conceptual guidance for this assignment.
